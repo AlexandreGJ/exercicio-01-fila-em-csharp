@@ -1,1 +1,38 @@
-e
+internal class Program
+{
+    static void Main(string[] args)
+
+    {
+        var cliente = new Queue<string>();
+        for (int i = 1; i <= 10; i++)
+        {
+            cliente.Enqueue($"Cliente {i}");
+        }
+
+        var funcionario = new List<string>();
+        for (int i = 1; i <= 10; i++)
+        {
+            funcionario.Add($"Funcionario {i}");
+        }
+
+        foreach (var clienteAtual in cliente)
+        {
+            Console.WriteLine($"{DateTime.Now} : {clienteAtual} entrou na fila de espera.");
+        }
+
+        Random random = new Random();
+
+        while (cliente.Count > 0)
+        {
+            var clienteAtual = cliente.Dequeue();
+            int timeout = random.Next(1, 10);
+
+            Console.WriteLine($"{DateTime.Now} : Atendendo {clienteAtual}.");
+            System.Threading.Thread.Sleep(1000 * timeout);
+            Console.WriteLine($"{DateTime.Now} : {clienteAtual} está sendo atendido pelo {funcionario[random.Next(10)]} com o tempo de {timeout} segundos.");
+        }
+
+        Console.WriteLine("Todos os clientes foram atendidos.");
+        Console.ReadLine();
+    }
+}
